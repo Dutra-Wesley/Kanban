@@ -37,9 +37,9 @@
     display: flex;
     /* Usamos flexbox para posicionar o header e a coluna */
     flex-direction: column;
-    min-width: 300px;
+    min-width: 340px;
     /* Aumentamos a largura mínima */
-    max-width: 350px;
+    max-width: 340px;
     /* Aumentamos a largura máxima (opcional) */
     border: 1px solid rgb(235, 235, 235);
     /* Adiciona uma borda cinza clara */

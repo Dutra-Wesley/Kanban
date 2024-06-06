@@ -33,7 +33,7 @@
 }
 
 .register-container button {
-    background-color: #007bff;
+    background-color: #0068d7;
     /* Azul primário */
     color: white;
     padding: 10px 15px;
@@ -45,7 +45,7 @@
 }
 
 .register-container button:hover {
-    background-color: #0069d9;
+    background-color: #005dc1;
     /* Azul mais escuro ao passar o mouse */
 }
 
