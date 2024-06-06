@@ -1,0 +1,26 @@
+.add-task-button {
+    background-color: #007bff;
+    /* Azul primário */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    /* Texto em negrito */
+}
+
+.add-task-button:hover {
+    background-color: #0069d9;
+    /* Azul mais escuro ao passar o mouse */
+}
+
+.add-task-button.small {
+    padding: 4px 8px;
+    margin-top: 10px;
+}
+
+.add-task-button.large {
+    padding: 15px 20px;
+}

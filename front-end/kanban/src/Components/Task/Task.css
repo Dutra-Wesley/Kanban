@@ -1,0 +1,51 @@
+.task {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    /* Aumentamos o padding */
+    margin-bottom: 15px;
+    /* Aumentamos a margem inferior */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+    min-height: 100px;
+    /* Adicionamos uma altura mínima */
+    display: flex;
+    /* Usamos flexbox para organizar o conteúdo da task */
+    flex-direction: column;
+    /* Conteúdo em coluna */
+    word-wrap: break-word;
+}
+
+.task:hover {
+    transform: translateY(-2px);
+}
+
+.task h3 {
+    color: #000000;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    background-color: rgb(199, 199, 199);
+    border-radius: 10px;
+    padding: 3.5px;
+    /* Aumentamos a margem inferior */
+}
+
+.task p {
+    color: #000000;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    flex-grow: 1;
+    background-color: rgb(223, 221, 221);
+    border-radius: 10px;
+    padding: 3.5px;
+    /* Permite que a descrição ocupe o espaço disponível */
+}
+
+.task-buttons {
+    display: flex;
+    gap: 5px;
+    margin-top: auto;
+    /* Empurra os botões para baixo */
+    align-self: flex-end;
+    /* Alinha os botões à direita */
+}

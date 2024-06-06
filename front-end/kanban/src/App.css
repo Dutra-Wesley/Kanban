@@ -1,0 +1,31 @@
+/* Estilos para o container principal */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  /* Garante que o container ocupe toda a altura da tela */
+}
+
+/* Estilos para o container de autenticação (login e registro) */
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  /* Ocupa toda a altura da tela */
+}
+
+/* Estilos para o container do Kanban Board */
+.kanban-container {
+  display: flex;
+  height: calc(100vh - 80px);
+  /* Ajuste para ocupar a tela com margem */
+  margin-top: 40px;
+  /* Margem superior para o Kanban */
+  width: 100%;
+  /* Garante que o Kanban ocupe toda a largura */
+  justify-content: center;
+  /* Centraliza as colunas horizontalmente */
+}
