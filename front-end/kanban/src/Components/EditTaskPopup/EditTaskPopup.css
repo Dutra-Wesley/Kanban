@@ -62,21 +62,21 @@
 }
 
 .popup button[type="submit"] {
-    background-color: #007bff;
+    background-color: #0068d7;
     /* Azul primário */
     color: white;
 }
 
 .popup button[type="submit"]:hover {
-    background-color: #0069d9;
+    background-color: #005dc1;
     /* Azul mais escuro ao passar o mouse */
 }
 
 .popup button[type="button"] {
-    background-color: #f8f9fa;
+    background-color: #e9e9e9;
     color: #212529;
 }
 
 .popup button[type="button"]:hover {
-    background-color: #e9ecef;
+    background-color: #dbdbdb;
 }
