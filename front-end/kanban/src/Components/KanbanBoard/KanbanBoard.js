@@ -95,15 +95,18 @@ const KanbanBoard = () => {
         const { source, destination } = result;
 
         if (source.droppableId !== destination.droppableId) {
-            const sourceColumnIndex = columns.findIndex(
-                (column) => column.id === parseInt(source.droppableId)
-            );
-            const destColumnIndex = columns.findIndex(
-                (column) => column.id === parseInt(destination.droppableId)
-            );
+            const sourceColumnIndex = columns.findIndex(column => column.id === parseInt(source.droppableId));
+            const destColumnIndex = columns.findIndex(column => column.id === parseInt(destination.droppableId));
 
             const newColumns = Array.from(columns);
             const [removed] = newColumns[sourceColumnIndex].tasks.splice(source.index, 1);
+
+            if (sourceColumnIndex === 0 && destColumnIndex === 2 && !removed.startDate) {
+                alert("Você não iniciou esta tarefa ainda!");
+                fetchTasks();
+                return;
+            }
+
             newColumns[destColumnIndex].tasks.splice(destination.index, 0, removed);
 
             if (destColumnIndex === 1 && !removed.startDate) {
@@ -116,8 +119,8 @@ const KanbanBoard = () => {
             }
 
             setTasks(newColumns.flatMap((column) => column.tasks));
+            setColumns(newColumns);
 
-            // Atualiza a tarefa no back-end
             ApiService.updateTask(removed);
         }
     };
