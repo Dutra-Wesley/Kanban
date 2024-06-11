@@ -6,7 +6,10 @@ import EditTaskPopup from '../EditTaskPopup/EditTaskPopup.js';
 import ApiService from '../../ApiService/ApiService.js';
 import AuthContext from '../../Context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { ReactComponent as DeleteIcon } from '../../Imgs/Delete.svg';
+import { ReactComponent as LogoutIcon } from '../../Imgs/Logout.svg';
 import './KanbanBoard.css';
+import HamburgerMenu from '../HamburgerMenu/HamburgerMenu.js';
 
 const KanbanBoard = () => {
     const { user } = useContext(AuthContext);
@@ -16,6 +19,16 @@ const KanbanBoard = () => {
     const [editingTask, setEditingTask] = useState(null); // Task sendo editada
     const { logout } = useContext(AuthContext);
     const navigate = useNavigate();
+
+    const handleLogout = useCallback(() => {
+        logout();
+        navigate('/login');
+    }, [logout, navigate]);
+
+    const buttons = [
+        { icon: <DeleteIcon />, text: 'LIXEIRA', color: '#0068d7', onClick: () => { } }, // Ícone de lixeira (substitua pelo seu SVG)
+        { icon: <LogoutIcon />, text: 'SAIR', color: '#dc3545', onClick: handleLogout }, // Ícone de sair (substitua pelo seu SVG)
+    ];
 
     const [columns, setColumns] = useState([
         { id: 1, title: 'Iniciar', tasks: [] },
@@ -125,17 +138,10 @@ const KanbanBoard = () => {
         }
     };
 
-    const handleLogout = () => {
-        logout();
-        navigate('/login');
-    };
-
     return (
         <DragDropContext onDragEnd={handleOnDragEnd}>
             <div className="kanban-board">
-                <button className="logout-button" onClick={handleLogout}>
-                    SAIR
-                </button>
+                <HamburgerMenu buttons={buttons} />
                 {columns.map((column, index) => (
                     <Column
                         key={column.id}
