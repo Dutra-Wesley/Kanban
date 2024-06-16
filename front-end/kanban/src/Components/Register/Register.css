@@ -1,4 +1,4 @@
-/* Estilos iguais ao Login.css, pois a estrutura é similar */
+/* Estilos gerais do container */
 .register-container {
     display: flex;
     flex-direction: column;
@@ -24,14 +24,67 @@
     width: 100%;
 }
 
-.register-container input {
-    padding: 10px;
+/* Estilos dos campos de input */
+.register-container .input-group {
+    /* Novo container para o input e a mensagem */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     margin-bottom: 15px;
-    border: 1px solid #ced4da;
-    /* Cinza claro para a borda */
-    border-radius: 4px;
 }
 
+.register-container input[type="text"],
+.register-container input[type="password"] {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+    /* Transição suave para a cor da borda */
+}
+
+/* Estilos dos campos preenchidos */
+.register-container input.filled {
+    border-color: #ced4da;
+    /* Mantém a borda cinza se preenchido */
+}
+
+/* Estilos dos campos com erro (sempre visível) */
+.register-container input.error {
+    border-color: #dc3545;
+    /* Borda vermelha */
+}
+
+/* Estilos dos campos com sucesso */
+.register-container input.success {
+    border-color: #28a745;
+    /* Borda verde */
+}
+
+/* Estilos dos campos válidos */
+.register-container input.valid {
+    border-color: #28a745;
+    /* Borda verde */
+}
+
+/* Estilos das mensagens de erro e sucesso */
+.register-container .error-message,
+.register-container .success-message {
+    font-size: 0.8rem;
+    margin-top: 5px;
+    /* Espaçamento superior à mensagem */
+}
+
+.register-container .error-message {
+    color: #dc3545;
+    /* Vermelho */
+}
+
+.register-container .success-message {
+    color: #28a745;
+    /* Verde */
+}
+
+/* Estilos do botão */
 .register-container button {
     background-color: #0068d7;
     /* Azul primário */
@@ -49,6 +102,7 @@
     /* Azul mais escuro ao passar o mouse */
 }
 
+/* Estilos para o link */
 .register-container p {
     margin-top: 20px;
 }

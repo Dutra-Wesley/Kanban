@@ -2,6 +2,8 @@ const API_URL = 'http://localhost:8080/api';
 
 const ApiService = {
 
+    checkUsernameAvailability: (username) => fetch(`${API_URL}/users/username/availability?username=${username}`).then(res => res.json()),
+
     getTasks: async (userId, includeDeleted = false) => {
         try {
             const url = `${API_URL}/tasks?userId=${userId}&includeDeleted=${includeDeleted}`;
