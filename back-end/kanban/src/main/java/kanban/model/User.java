@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import kanban.validation.ValidPassword;
 import lombok.Data;
 
 @Entity
@@ -17,5 +18,7 @@ public class User {
     @Column(unique = true)
     private String username;
 
-    private String password; // Senha em texto plano (não recomendado para produção)
+    @ValidPassword
+    private String password;
+
 }

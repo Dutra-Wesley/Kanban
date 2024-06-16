@@ -2,14 +2,19 @@ package kanban.controller;
 
 import kanban.exceptions.UserNotFoundException;
 import kanban.model.User;
+import kanban.repository.UserRepository;
 import kanban.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
@@ -17,6 +22,15 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping("/username/availability")
+    public ResponseEntity<Boolean> checkUsernameAvailability(@RequestParam String username) {
+        boolean isAvailable = !userRepository.existsByUsernameIgnoreCase(username);
+        return ResponseEntity.ok(isAvailable);
+    }
 
     @PostMapping
     public ResponseEntity<User> registerUser(@RequestBody User user) {
@@ -42,5 +56,14 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException ex) {
+        String errorMessage = ex.getConstraintViolations()
+                .stream()
+                .map(ConstraintViolation::getMessage)
+                .collect(Collectors.joining(", "));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\": \"" + errorMessage + "\"}");
     }
 }
