@@ -1,6 +1,7 @@
 package kanban.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -14,9 +15,11 @@ public class Task {
 
     private String name;
     private String description;
-    private LocalDate creationDate;
     private String startDate;
     private String endDate;
+    private LocalDate creationDate;
+    private Boolean deleted = false;
+    private LocalDateTime deletedAt;
 
     @PrePersist // Anotação para definir o valor antes de persistir no banco
     protected void onCreate() {

@@ -13,40 +13,55 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/tasks")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true") // Configuração do CORS
 public class TaskController {
 
     @Autowired
     private TaskService taskService;
 
     @GetMapping
-    public ResponseEntity<List<TaskDTO>> getTasks(@RequestParam("userId") Long userId) {
-        List<Task> tasks = taskService.getTasksByUser(userId);
+    public ResponseEntity<List<TaskDTO>> getTasks(@RequestParam("userId") Long userId,
+            @RequestParam(value = "includeDeleted", defaultValue = "false") boolean includeDeleted) {
+        List<Task> tasks = taskService.getTasksByUser(userId, includeDeleted);
         List<TaskDTO> taskDTOs = tasks.stream()
-                .map(task -> new TaskDTO(task.getId(), task.getName(), task.getDescription(), task.getCreationDate(),
-                        task.getStartDate(),
-                        task.getEndDate()))
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(taskDTOs);
     }
 
     @PostMapping
-    public ResponseEntity<Task> addTask(@RequestBody Task task, @RequestParam("userId") Long userId) {
+    public ResponseEntity<TaskDTO> addTask(@RequestBody Task task, @RequestParam("userId") Long userId) {
         Task newTask = taskService.addTask(task, userId);
-        return new ResponseEntity<>(newTask, HttpStatus.CREATED);
+        return new ResponseEntity<>(convertToDTO(newTask), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<TaskDTO> updateTask(@PathVariable Long id, @RequestBody Task task) {
         Task updatedTask = taskService.updateTask(id, task);
-        TaskDTO taskDTO = new TaskDTO(updatedTask.getId(), updatedTask.getName(), updatedTask.getDescription(),
-                task.getCreationDate(), updatedTask.getStartDate(), updatedTask.getEndDate());
-        return new ResponseEntity<>(taskDTO, HttpStatus.OK);
+        return new ResponseEntity<>(convertToDTO(updatedTask), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/restore")
+    public ResponseEntity<TaskDTO> restoreTask(@PathVariable Long id) { // Retorna TaskDTO
+        Task restoredTask = taskService.restoreTask(id);
+        return ResponseEntity.ok(convertToDTO(restoredTask)); // Retorna a tarefa restaurada como DTO
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}/permanently")
+    public ResponseEntity<Void> deleteTaskPermanently(@PathVariable Long id) {
+        taskService.deleteTaskPermanently(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    // Método auxiliar para converter Task para TaskDTO
+    private TaskDTO convertToDTO(Task task) {
+        return new TaskDTO(task.getId(), task.getName(), task.getDescription(),
+                task.getStartDate(), task.getEndDate(), task.getCreationDate(), task.getDeleted(), task.getDeletedAt());
     }
 }
