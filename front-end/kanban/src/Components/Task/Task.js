@@ -5,10 +5,14 @@ import { format } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
 import './Task.css';
 
-const Task = ({ task, index, onEditTaskClick, onDeleteTask }) => {
+const Task = ({ task, index, onEditTaskClick, onDeleteTask, isTrash = false }) => {
     const handleDeleteClick = () => {
-        if (window.confirm(`Deseja realmente excluir a tarefa "${task.name}"?`)) {
+        if (task.deleted) {
             onDeleteTask(task.id);
+        } else {
+            if (window.confirm(`Deseja realmente excluir a tarefa "${task.name}"?`)) {
+                onDeleteTask(task.id);
+            }
         }
     };
 
@@ -25,10 +29,10 @@ const Task = ({ task, index, onEditTaskClick, onDeleteTask }) => {
     };
 
     return (
-        <Draggable draggableId={task.id.toString()} index={index}>
+        <Draggable draggableId={task.id.toString()} index={index} isDragDisabled={isTrash}>
             {(provided) => (
                 <div
-                    className="task"
+                    className={`task ${isTrash ? 'trash' : ''}`}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
@@ -45,7 +49,11 @@ const Task = ({ task, index, onEditTaskClick, onDeleteTask }) => {
                         <p>Fim: {formatDate(task.endDate)}</p>
                     )}
                     <div className="task-buttons">
-                        <AddTaskButton size="small" iconName="edit" onClick={() => onEditTaskClick(task)} />
+                        {isTrash ? (
+                            <AddTaskButton size="small" iconName="restore" onClick={() => onEditTaskClick(task.id)} />
+                        ) : (
+                            <AddTaskButton size="small" iconName="edit" onClick={() => onEditTaskClick(task)} />
+                        )}
                         <AddTaskButton size="small" iconName="delete" onClick={handleDeleteClick} />
                     </div>
                 </div>

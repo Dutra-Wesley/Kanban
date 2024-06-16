@@ -106,3 +106,12 @@
     /* Cor do título "Concluído" */
     background-color: rgb(136, 244, 142);
 }
+
+.column.trash-column {
+    background-color: rgb(235, 235, 235);
+    /* Cor de fundo mais clara */
+    border: none;
+    /* Remove a borda */
+    box-shadow: none;
+    /* Remove a sombra */
+}

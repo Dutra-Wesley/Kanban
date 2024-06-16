@@ -3,6 +3,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import Column from '../Column/Column.js';
 import AddTaskPopup from '../AddTaskPopup/AddTaskPopup.js';
 import EditTaskPopup from '../EditTaskPopup/EditTaskPopup.js';
+import TrashPopup from '../TrashPopup/TrashPopup.js';
 import ApiService from '../../ApiService/ApiService.js';
 import AuthContext from '../../Context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -17,8 +18,14 @@ const KanbanBoard = () => {
     const [showAddTaskPopup, setShowAddTaskPopup] = useState(false);
     const [showEditTaskPopup, setShowEditTaskPopup] = useState(false);
     const [editingTask, setEditingTask] = useState(null); // Task sendo editada
+    const [showTrashPopup, setShowTrashPopup] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { logout } = useContext(AuthContext);
     const navigate = useNavigate();
+
+    const handleMenuToggle = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
 
     const handleLogout = useCallback(() => {
         logout();
@@ -26,7 +33,7 @@ const KanbanBoard = () => {
     }, [logout, navigate]);
 
     const buttons = [
-        { icon: <DeleteIcon />, text: 'LIXEIRA', color: '#0068d7', onClick: () => { } }, // Ícone de lixeira (substitua pelo seu SVG)
+        { icon: <DeleteIcon />, text: 'LIXEIRA', color: '#0068d7', onClick: () => { setShowTrashPopup(true); setIsMenuOpen(false); } }, // Ícone de lixeira (substitua pelo seu SVG)
         { icon: <LogoutIcon />, text: 'SAIR', color: '#dc3545', onClick: handleLogout }, // Ícone de sair (substitua pelo seu SVG)
     ];
 
@@ -39,7 +46,7 @@ const KanbanBoard = () => {
     const fetchTasks = useCallback(async () => {
         if (user) {
             try {
-                const data = await ApiService.getTasks(user.id);
+                const data = await ApiService.getTasks(user.id); // Busca todas as tasks (não excluídas)
                 setTasks(data);
                 const newColumns = [
                     { id: 1, title: 'Iniciar', tasks: data.filter(task => !task.startDate) },
@@ -51,7 +58,7 @@ const KanbanBoard = () => {
                 console.error('Erro ao buscar tarefas:', error);
             }
         }
-    }, [user]);
+    }, [user]); // Executa o efeito quando o usuário muda (após login/logout)
 
     useEffect(() => {
         fetchTasks();
@@ -72,31 +79,24 @@ const KanbanBoard = () => {
     const handleAddTask = (newTask) => {
         ApiService.addTask(newTask, user.id)
             .then(addedTask => {
-                setTasks([...tasks, addedTask]); // Atualiza o estado tasks
-
-                // Atualiza o estado columns
-                setColumns(prevColumns => prevColumns.map(column => {
-                    if (column.id === 1) { // Coluna "Iniciar"
-                        return { ...column, tasks: [...column.tasks, addedTask] };
-                    } else {
-                        return column;
-                    }
-                }));
-
+                setTasks([...tasks, addedTask]);
+                const updatedColumns = [...columns];
+                updatedColumns[0].tasks.push(addedTask);
+                setColumns(updatedColumns);
                 handleCloseAddTaskPopup();
             });
     };
 
     const handleEditTask = (editedTask) => {
         ApiService.updateTask(editedTask, user.id).then(updatedTask => {
-            setTasks(tasks.map(task => (task.id === updatedTask.id ? updatedTask : task)));
+            setTasks(prevTasks => prevTasks.map(task => (task.id === updatedTask.id ? updatedTask : task)));
             fetchTasks();
             handleCloseEditTaskPopup();
         });
     };
 
     const handleDeleteTask = (taskId) => {
-        ApiService.deleteTask(taskId, user.id).then(() => { // Passa o userId
+        ApiService.deleteTask(taskId, user.id).then(() => {
             setTasks(tasks.filter(task => task.id !== taskId));
             fetchTasks();
         });
@@ -141,7 +141,7 @@ const KanbanBoard = () => {
     return (
         <DragDropContext onDragEnd={handleOnDragEnd}>
             <div className="kanban-board">
-                <HamburgerMenu buttons={buttons} />
+                <HamburgerMenu buttons={buttons} isOpen={isMenuOpen} onToggle={handleMenuToggle} />
                 {columns.map((column, index) => (
                     <Column
                         key={column.id}
@@ -154,13 +154,9 @@ const KanbanBoard = () => {
                 ))}
             </div>
 
-            {showAddTaskPopup && (
-                <AddTaskPopup onClose={handleCloseAddTaskPopup} onAddTask={handleAddTask} />
-            )}
-
-            {showEditTaskPopup && (
-                <EditTaskPopup task={editingTask} onClose={handleCloseEditTaskPopup} onEditTask={handleEditTask} />
-            )}
+            {showAddTaskPopup && <AddTaskPopup onClose={handleCloseAddTaskPopup} onAddTask={handleAddTask} />}
+            {showEditTaskPopup && <EditTaskPopup task={editingTask} onClose={handleCloseEditTaskPopup} onEditTask={handleEditTask} />}
+            {showTrashPopup && <TrashPopup onClose={() => setShowTrashPopup(false)} fetchTasks={fetchTasks} />} {/* TrashPopup */}
         </DragDropContext>
     );
 };

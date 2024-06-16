@@ -49,3 +49,9 @@
     align-self: flex-end;
     /* Alinha os botões à direita */
 }
+
+.task.trash {
+    /* ... seus estilos ... */
+    transform: none;
+    /* Remove o efeito de hover */
+}
