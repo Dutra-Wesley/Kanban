@@ -11,6 +11,7 @@ import { ReactComponent as DeleteIcon } from '../../Imgs/Delete.svg';
 import { ReactComponent as LogoutIcon } from '../../Imgs/Logout.svg';
 import './KanbanBoard.css';
 import HamburgerMenu from '../HamburgerMenu/HamburgerMenu.js';
+import Overlay from '../Overlay/Overlay';
 
 const KanbanBoard = () => {
     const { user } = useContext(AuthContext);
@@ -142,6 +143,13 @@ const KanbanBoard = () => {
         <DragDropContext onDragEnd={handleOnDragEnd}>
             <div className="kanban-board">
                 <HamburgerMenu buttons={buttons} isOpen={isMenuOpen} onToggle={handleMenuToggle} />
+                {(showAddTaskPopup || showEditTaskPopup || showTrashPopup) && (
+                    <Overlay onClick={() => {
+                        setShowAddTaskPopup(false);
+                        setShowEditTaskPopup(false);
+                        setShowTrashPopup(false);
+                    }} />
+                )}
                 {columns.map((column, index) => (
                     <Column
                         key={column.id}
