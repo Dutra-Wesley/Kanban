@@ -14,8 +14,8 @@ function Login() {
         const success = await login(username, password);
         if (!success) {
             alert('Usuário ou senha incorretos!');
-            setUsername(''); // Limpa o campo de username
-            setPassword(''); // Limpa o campo de senha
+            setUsername('');
+            setPassword('');
         } else {
             navigate('/');
         }

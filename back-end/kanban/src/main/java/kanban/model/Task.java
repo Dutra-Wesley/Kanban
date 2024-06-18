@@ -29,12 +29,12 @@ public class Task {
     private Boolean deleted = false;
     private LocalDateTime deletedAt;
 
-    @PrePersist // Anotação para definir o valor antes de persistir no banco
+    @PrePersist
     protected void onCreate() {
         creationDate = LocalDate.now();
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user; // Relacionamento com o usuário
+    private User user;
 }

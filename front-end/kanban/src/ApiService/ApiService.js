@@ -40,7 +40,7 @@ const ApiService = {
             if (!response.ok) {
                 throw new Error('Erro ao restaurar tarefa.');
             }
-            return response.json(); // Retorna a tarefa restaurada (opcional)
+            return response.json();
         } catch (error) {
             console.error('Erro na requisição:', error);
             throw error;
@@ -53,7 +53,7 @@ const ApiService = {
             if (!response.ok) {
                 throw new Error('Erro ao excluir permanentemente a tarefa.');
             }
-            return response; // Retorna a resposta (opcional)
+            return response;
         } catch (error) {
             console.error('Erro na requisição:', error);
             throw error;

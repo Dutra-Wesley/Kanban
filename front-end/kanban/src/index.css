@@ -3,5 +3,4 @@ body {
   background-color: #f8f9fa;
   margin: 0;
   overflow-y: hidden;
-  /* Remove a rolagem do body nas telas de login e registro */
 }

@@ -1,12 +1,9 @@
 .column {
     background-color: rgb(235, 235, 235);
     border-radius: 0 0 8px 8px;
-    /* Arredonda apenas os cantos inferiores */
     padding: 20px;
     flex-grow: 1;
-    /* Faz a coluna ocupar o espaço restante */
     overflow-y: auto;
-    /* Adiciona barra de rolagem vertical quando necessário */
 }
 
 .column:hover {
@@ -27,24 +24,16 @@
     border: 2px solid rgba(0, 0, 0, 0.15);
     border-radius: 8px;
     display: block;
-    /* Garante que o h2 seja um elemento de bloco */
     width: 100%;
-    /* Ocupa toda a largura da coluna */
-
 }
 
 .column-wrapper {
     display: flex;
-    /* Usamos flexbox para posicionar o header e a coluna */
     flex-direction: column;
     min-width: 340px;
-    /* Aumentamos a largura mínima */
     max-width: 340px;
-    /* Aumentamos a largura máxima (opcional) */
     border: 1px solid rgb(235, 235, 235);
-    /* Adiciona uma borda cinza clara */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Adiciona uma sombra sutil */
     border-radius: 10px;
 }
 
@@ -57,61 +46,46 @@
     width: 100%;
     box-sizing: border-box;
     border-radius: 8px 8px 0 0;
-    /* Arredonda apenas os cantos superiores */
 }
 
-/* Estilos para a coluna "Iniciar" */
 .column.start {
     justify-content: flex-start;
-    /* Alinha o conteúdo no início */
     align-items: center;
 }
 
-/* Centraliza o botão quando não há tarefas */
 .column.start:only-child .tasks-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* Centraliza verticalmente */
     align-items: center;
-    /* Centraliza horizontalmente */
     height: 100%;
-    /* Garante que o container ocupe toda a altura da coluna */
 }
 
 .column.start .tasks-container {
     width: 100%;
 }
 
-/* Estilos gerais para o container de tarefas */
 .column .tasks-container {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     overflow-y: auto;
-    /* Permite que o container ocupe o espaço disponível */
 }
 
 .column-header.start {
-    /* Cor do título "Iniciar" */
     background-color: rgb(136, 226, 244);
 }
 
 .column-header.progress {
-    /* Cor do título "Em Progresso" */
     background-color: rgb(244, 230, 136);
 }
 
 .column-header.done {
-    /* Cor do título "Concluído" */
     background-color: rgb(136, 244, 142);
 }
 
 .column.trash-column {
     background-color: rgb(235, 235, 235);
-    /* Cor de fundo mais clara */
     border: none;
-    /* Remove a borda */
     box-shadow: none;
-    /* Remove a sombra */
 }

@@ -1,4 +1,3 @@
-/* Estilos gerais do container */
 .register-container {
     display: flex;
     flex-direction: column;
@@ -8,12 +7,10 @@
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 350px;
-    /* Largura do container */
 }
 
 .register-container h2 {
     color: #212529;
-    /* Cinza escuro para o título */
     font-size: 1.5rem;
     margin-bottom: 20px;
 }
@@ -24,9 +21,7 @@
     width: 100%;
 }
 
-/* Estilos dos campos de input */
 .register-container .input-group {
-    /* Novo container para o input e a mensagem */
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -39,55 +34,40 @@
     border: 1px solid #ced4da;
     border-radius: 4px;
     transition: border-color 0.3s ease;
-    /* Transição suave para a cor da borda */
 }
 
-/* Estilos dos campos preenchidos */
 .register-container input.filled {
     border-color: #ced4da;
-    /* Mantém a borda cinza se preenchido */
 }
 
-/* Estilos dos campos com erro (sempre visível) */
 .register-container input.error {
     border-color: #dc3545;
-    /* Borda vermelha */
 }
 
-/* Estilos dos campos com sucesso */
 .register-container input.success {
     border-color: #28a745;
-    /* Borda verde */
 }
 
-/* Estilos dos campos válidos */
 .register-container input.valid {
     border-color: #28a745;
-    /* Borda verde */
 }
 
-/* Estilos das mensagens de erro e sucesso */
 .register-container .error-message,
 .register-container .success-message {
     font-size: 0.8rem;
     margin-top: 5px;
-    /* Espaçamento superior à mensagem */
 }
 
 .register-container .error-message {
     color: #dc3545;
-    /* Vermelho */
 }
 
 .register-container .success-message {
     color: #28a745;
-    /* Verde */
 }
 
-/* Estilos do botão */
 .register-container button {
     background-color: #0068d7;
-    /* Azul primário */
     color: white;
     padding: 10px 15px;
     border: none;
@@ -99,21 +79,17 @@
 
 .register-container button:hover {
     background-color: #005dc1;
-    /* Azul mais escuro ao passar o mouse */
 }
 
-/* Estilos para o link */
 .register-container p {
     margin-top: 20px;
 }
 
 .register-container a {
     color: #007bff;
-    /* Azul primário para o link */
     text-decoration: none;
 }
 
 .register-container a:hover {
     text-decoration: underline;
-    /* Sublinhado ao passar o mouse */
 }

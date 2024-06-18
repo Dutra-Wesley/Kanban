@@ -33,8 +33,8 @@ const KanbanBoard = () => {
     }, [logout, navigate]);
 
     const buttons = [
-        { icon: <DeleteIcon />, text: 'LIXEIRA', color: '#0068d7', onClick: () => { setShowTrashPopup(true); setIsMenuOpen(false); } }, // Ícone de lixeira (substitua pelo seu SVG)
-        { icon: <LogoutIcon />, text: 'SAIR', color: '#dc3545', onClick: handleLogout }, // Ícone de sair (substitua pelo seu SVG)
+        { icon: <DeleteIcon />, text: 'LIXEIRA', color: '#0068d7', onClick: () => { setShowTrashPopup(true); setIsMenuOpen(false); } },
+        { icon: <LogoutIcon />, text: 'SAIR', color: '#dc3545', onClick: handleLogout },
     ];
 
     const [columns, setColumns] = useState([
@@ -46,7 +46,7 @@ const KanbanBoard = () => {
     const fetchTasks = useCallback(async () => {
         if (user) {
             try {
-                const data = await ApiService.getTasks(user.id); // Busca todas as tasks (não excluídas)
+                const data = await ApiService.getTasks(user.id);
                 setTasks(data);
                 const newColumns = [
                     { id: 1, title: 'Iniciar', tasks: data.filter(task => !task.startDate) },
@@ -58,7 +58,7 @@ const KanbanBoard = () => {
                 console.error('Erro ao buscar tarefas:', error);
             }
         }
-    }, [user]); // Executa o efeito quando o usuário muda (após login/logout)
+    }, [user]);
 
     useEffect(() => {
         fetchTasks();
@@ -156,7 +156,7 @@ const KanbanBoard = () => {
 
             {showAddTaskPopup && <AddTaskPopup onClose={handleCloseAddTaskPopup} onAddTask={handleAddTask} />}
             {showEditTaskPopup && <EditTaskPopup task={editingTask} onClose={handleCloseEditTaskPopup} onEditTask={handleEditTask} />}
-            {showTrashPopup && <TrashPopup onClose={() => setShowTrashPopup(false)} fetchTasks={fetchTasks} />} {/* TrashPopup */}
+            {showTrashPopup && <TrashPopup onClose={() => setShowTrashPopup(false)} fetchTasks={fetchTasks} />}
         </DragDropContext>
     );
 };

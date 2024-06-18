@@ -1,4 +1,3 @@
-/* Estilos específicos para o TrashPopup */
 .trash-popup {
     position: fixed;
     top: 50%;
@@ -11,7 +10,6 @@
     z-index: 10;
     width: 500px;
     max-width: 95%;
-
 }
 
 .trash-popup h2 {
@@ -40,9 +38,7 @@
 
 .trash-popup .deleted-tasks {
     display: flex;
-    /* Usamos flexbox para centralizar a coluna */
     justify-content: center;
-    /* Centraliza horizontalmente */
     max-height: 400px;
     overflow-y: auto;
     margin-bottom: 30px;
@@ -68,30 +64,25 @@
 .trash-popup button.delete-all {
     background-color: #dc3545;
     font-weight: bold;
-    /* Vermelho */
     color: white;
 }
 
 .trash-popup button[type="button"],
 .trash-popup button.close {
     background-color: #e9e9e9;
-    /* Cinza claro */
     color: #212529;
 }
 
 .trash-popup button.delete-all:hover {
     background-color: #c52f3e;
-    /* Exemplo de cor de fundo no hover */
 }
 
 /* Hover para o botão "Fechar" */
 .trash-popup button.close:hover {
     background-color: #dbdbdb;
-    /* Exemplo de cor de fundo no hover */
 }
 
 .column-header {
-    /* Cor do título "Iniciar" */
     background-color: rgb(244, 136, 151);
 }
 

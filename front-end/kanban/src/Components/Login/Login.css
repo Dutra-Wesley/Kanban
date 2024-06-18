@@ -7,12 +7,10 @@
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 350px;
-    /* Largura do container */
 }
 
 .login-container h2 {
     color: #212529;
-    /* Cinza escuro para o título */
     font-size: 1.5rem;
     margin-bottom: 20px;
 }
@@ -27,13 +25,11 @@
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ced4da;
-    /* Cinza claro para a borda */
     border-radius: 4px;
 }
 
 .login-container button {
     background-color: #0068d7;
-    /* Azul primário */
     color: white;
     padding: 10px 15px;
     border: none;
@@ -45,7 +41,6 @@
 
 .login-container button:hover {
     background-color: #005dc1;
-    /* Azul mais escuro ao passar o mouse */
 }
 
 .login-container p {
@@ -54,11 +49,9 @@
 
 .login-container a {
     color: #007bff;
-    /* Azul primário para o link */
     text-decoration: none;
 }
 
 .login-container a:hover {
     text-decoration: underline;
-    /* Sublinhado ao passar o mouse */
 }

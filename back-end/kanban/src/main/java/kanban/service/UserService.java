@@ -21,10 +21,9 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private Validator validator; // Injeta o validador
+    private Validator validator;
 
     public User registerUser(User user) {
-        // Valida o usuário antes de salvar
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);
@@ -39,8 +38,6 @@ public class UserService {
     }
 
     public User authenticateUser(String username, String password) {
-        System.out.println("Tentando autenticar usuário: " + username);
-
         Optional<User> userOptional = userRepository.findByUsername(username);
 
         if (userOptional.isEmpty()) {
@@ -49,13 +46,10 @@ public class UserService {
         }
 
         User user = userOptional.get();
-        System.out.println("Comparando a senha: " + password + " com a senha do banco: " + user.getPassword());
 
         if (user.getPassword().equals(password)) {
-            System.out.println("Usuário autenticado com sucesso: " + username);
-            return user; // Retorna o usuário autenticado
+            return user;
         } else {
-            System.out.println("Senha incorreta para o usuário: " + username);
             throw new RuntimeException("Senha incorreta");
         }
     }

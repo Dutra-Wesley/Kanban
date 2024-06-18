@@ -42,9 +42,9 @@ public class TaskController {
     }
 
     @PutMapping("/{id}/restore")
-    public ResponseEntity<TaskDTO> restoreTask(@PathVariable Long id) { // Retorna TaskDTO
+    public ResponseEntity<TaskDTO> restoreTask(@PathVariable Long id) {
         Task restoredTask = taskService.restoreTask(id);
-        return ResponseEntity.ok(convertToDTO(restoredTask)); // Retorna a tarefa restaurada como DTO
+        return ResponseEntity.ok(convertToDTO(restoredTask));
     }
 
     @DeleteMapping("/{id}")

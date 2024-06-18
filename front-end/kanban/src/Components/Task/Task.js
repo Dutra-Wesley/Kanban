@@ -24,7 +24,7 @@ const Task = ({ task, index, onEditTaskClick, onDeleteTask, isTrash = false }) =
 
     const formatDateStart = (dateString) => {
         if (!dateString) return '';
-        const date = toZonedTime(dateString, 'America/Sao_Paulo'); // Ajuste para seu fuso horário
+        const date = toZonedTime(dateString, 'America/Sao_Paulo');
         return format(date, 'dd/MM/yyyy');
     };
 
