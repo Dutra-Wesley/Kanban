@@ -26,6 +26,12 @@ const ApiService = {
         body: JSON.stringify(task),
     }).then(res => res.json()),
 
+    updateTaskOrder: (tasks, userId) => fetch(`${API_URL}/tasks/order?userId=${userId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(tasks),
+    }),
+
     updateTask: (task, userId) => fetch(`${API_URL}/tasks/${task.id}?userId=${userId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

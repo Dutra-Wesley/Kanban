@@ -50,9 +50,9 @@ const KanbanBoard = () => {
                 const data = await ApiService.getTasks(user.id);
                 setTasks(data);
                 const newColumns = [
-                    { id: 1, title: 'Iniciar', tasks: data.filter(task => !task.startDate) },
-                    { id: 2, title: 'Em Progresso', tasks: data.filter(task => task.startDate && !task.endDate) },
-                    { id: 3, title: 'Concluído', tasks: data.filter(task => task.endDate) },
+                    { id: 1, title: 'Iniciar', tasks: data.filter(task => !task.startDate).sort((a, b) => a.orderIndex - b.orderIndex) },
+                    { id: 2, title: 'Em Progresso', tasks: data.filter(task => task.startDate && !task.endDate).sort((a, b) => a.orderIndex - b.orderIndex) },
+                    { id: 3, title: 'Concluído', tasks: data.filter(task => task.endDate).sort((a, b) => a.orderIndex - b.orderIndex) },
                 ];
                 setColumns(newColumns);
             } catch (error) {
@@ -121,8 +121,6 @@ const KanbanBoard = () => {
                 return;
             }
 
-            newColumns[destColumnIndex].tasks.splice(destination.index, 0, removed);
-
             if (destColumnIndex === 1 && !removed.startDate) {
                 removed.startDate = new Date().toISOString();
             } else if (destColumnIndex === 2 && !removed.endDate) {
@@ -132,10 +130,44 @@ const KanbanBoard = () => {
                 removed.endDate = null;
             }
 
+            newColumns[destColumnIndex].tasks.splice(destination.index, 0, removed);
+
+            newColumns[destColumnIndex].tasks.forEach((task, index) => {
+                task.orderIndex = index;
+            });
+
             setTasks(newColumns.flatMap((column) => column.tasks));
             setColumns(newColumns);
 
-            ApiService.updateTask(removed);
+            ApiService.updateTask(removed, user.id)
+                .then(() => ApiService.updateTaskOrder(newColumns[destColumnIndex].tasks, user.id))
+                .catch(error => console.error('Erro ao atualizar a tarefa ou ordem:', error));
+        } else {
+            const columnIndex = columns.findIndex(column => column.id === parseInt(source.droppableId));
+            const updatedColumn = Array.from(columns[columnIndex].tasks);
+            const [removed] = updatedColumn.splice(source.index, 1);
+            updatedColumn.splice(destination.index, 0, removed);
+
+            updatedColumn.forEach((task, index) => {
+                task.orderIndex = index;
+            });
+
+            setTasks(prevTasks => prevTasks.map(task => {
+                if (updatedColumn.find(t => t.id === task.id)) {
+                    return updatedColumn.find(t => t.id === task.id);
+                } else {
+                    return task;
+                }
+            }));
+            setColumns(prevColumns => prevColumns.map(column => {
+                if (column.id === parseInt(source.droppableId)) {
+                    return { ...column, tasks: updatedColumn };
+                } else {
+                    return column;
+                }
+            }));
+
+            ApiService.updateTaskOrder(updatedColumn, user.id);
         }
     };
 
