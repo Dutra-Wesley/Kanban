@@ -1,5 +1,6 @@
 package kanban.service;
 
+import kanban.dto.TaskDTO;
 import kanban.exceptions.UserNotFoundException;
 import kanban.model.Task;
 import kanban.model.User;
@@ -7,6 +8,8 @@ import kanban.repository.TaskRepository;
 import kanban.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,7 +37,26 @@ public class TaskService {
             throw new UserNotFoundException("Usuário não encontrado");
         }
         task.setUser(userOptional.get());
+
+        List<Task> tasksInColumn = taskRepository.findByUserAndDeleted(userOptional.get(), false); 
+        int lastOrderIndex = tasksInColumn.stream()
+                .mapToInt(Task::getOrderIndex)
+                .max()
+                .orElse(-1); 
+        task.setOrderIndex(lastOrderIndex + 1); 
+
         return taskRepository.save(task);
+    }
+
+    @Transactional
+    public void updateTaskOrder(List<TaskDTO> taskDTOs, Long userId) {
+        for (TaskDTO taskDTO : taskDTOs) {
+            Optional<Task> taskOptional = taskRepository.findById(taskDTO.getId());
+            taskOptional.ifPresent(task -> {
+                task.setOrderIndex(taskDTO.getOrderIndex());
+                taskRepository.save(task);
+            });
+        }
     }
 
     public void deleteTask(Long id) {

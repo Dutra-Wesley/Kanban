@@ -15,6 +15,8 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Integer orderIndex;
+
     @NotBlank
     @Size(min = 1)
     private String name;

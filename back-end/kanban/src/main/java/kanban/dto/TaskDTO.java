@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class TaskDTO {
 
     private Long id;
+    private Integer orderIndex;
     private String name;
     private String description;
     private String startDate;

@@ -35,6 +35,12 @@ public class TaskController {
         return new ResponseEntity<>(convertToDTO(newTask), HttpStatus.CREATED);
     }
 
+    @PutMapping("/order")
+    public ResponseEntity<Void> updateTaskOrder(@RequestBody List<TaskDTO> taskDTOs, @RequestParam("userId") Long userId) {
+        taskService.updateTaskOrder(taskDTOs, userId);
+        return ResponseEntity.ok().build();
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<TaskDTO> updateTask(@PathVariable Long id, @RequestBody Task task) {
         Task updatedTask = taskService.updateTask(id, task);
@@ -59,9 +65,8 @@ public class TaskController {
         return ResponseEntity.noContent().build();
     }
 
-    // Método auxiliar para converter Task para TaskDTO
     private TaskDTO convertToDTO(Task task) {
-        return new TaskDTO(task.getId(), task.getName(), task.getDescription(),
+        return new TaskDTO(task.getId(), task.getOrderIndex(), task.getName(), task.getDescription(),
                 task.getStartDate(), task.getEndDate(), task.getCreationDate(), task.getDeleted(), task.getDeletedAt());
     }
 }
