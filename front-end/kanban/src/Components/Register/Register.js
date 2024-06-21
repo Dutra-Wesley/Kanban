@@ -24,7 +24,7 @@ function Register() {
 
     useEffect(() => {
         const validateUsername = async () => {
-            if (username.length > 0 && !/\s/.test(username)) {
+            if (username.length >= 3 && !/\s/.test(username)) {
                 try {
                     const isAvailable = await ApiService.checkUsernameAvailability(username);
                     setUsernameAvailable(isAvailable);
@@ -39,7 +39,7 @@ function Register() {
                 }
             } else {
                 setUsernameAvailable(null);
-                setUsernameError(username.length === 0 ? 'Username deve conter ao menos 1 caractere' : 'Username não pode conter espaços');
+                setUsernameError(username.length < 3 ? 'Username deve conter ao menos 3 caracteres' : 'Username não pode conter espaços');
             }
         };
 
@@ -49,7 +49,7 @@ function Register() {
     useEffect(() => {
         const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
         setPasswordError(
-            passwordRegex.test(password) ? '' : 'Senha deve conter ao menos 6 caracteres, sendo eles: um número, uma letra e um caractere especial'
+            passwordRegex.test(password) ? '' : 'Senha deve conter ao menos 6 caracteres, sendo eles:'
         );
     }, [password]);
 
@@ -119,7 +119,12 @@ function Register() {
                     />
                 </div>
                 <div className="input-group">
-                    {showPasswordError && passwordError && <p className="error-message">{passwordError}</p>}
+                    {showPasswordError && passwordError && (
+                        <p className="error-message">
+                            {passwordError}
+                            <strong> um número, uma letra e um caractere especial</strong>
+                        </p>
+                    )}
                     <input
                         type="password"
                         placeholder="Senha"
