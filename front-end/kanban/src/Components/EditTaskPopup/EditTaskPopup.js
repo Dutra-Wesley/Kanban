@@ -29,7 +29,7 @@ const EditTaskPopup = ({ task, onClose, onEditTask }) => {
     };
 
     return (
-        <div className="popup">
+        <div className="edit-task-popup">
             <form onSubmit={handleSubmit}>
                 <h2>Editar Tarefa</h2>
                 <div>

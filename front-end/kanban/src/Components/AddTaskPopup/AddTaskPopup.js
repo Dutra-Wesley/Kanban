@@ -25,7 +25,7 @@ const AddTaskPopup = ({ onClose, onAddTask }) => {
     };
 
     return (
-        <div className="popup">
+        <div className="add-task-popup">
             <form onSubmit={handleSubmit}>
                 <h2>Adicionar Tarefa</h2>
                 <div>
