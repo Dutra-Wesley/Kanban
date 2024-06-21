@@ -121,11 +121,19 @@ const KanbanBoard = () => {
                 return;
             }
 
+            if (sourceColumnIndex === 2 && destColumnIndex === 0) {
+                alert("Você já finalizou esta tarefa, impossível iniciar novamente!");
+                fetchTasks();
+                return;
+            }
+
             if (destColumnIndex === 1 && !removed.startDate) {
                 removed.startDate = new Date().toISOString();
             } else if (destColumnIndex === 2 && !removed.endDate) {
                 removed.endDate = new Date().toISOString();
-            } else if (sourceColumnIndex === 1 || sourceColumnIndex === 2) {
+            } else if (sourceColumnIndex === 2 && destColumnIndex === 1) {
+                removed.endDate = null;
+            } else if (sourceColumnIndex === 1 && destColumnIndex === 0) {
                 removed.startDate = null;
                 removed.endDate = null;
             }
