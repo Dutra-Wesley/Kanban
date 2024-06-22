@@ -32,8 +32,11 @@ export const AuthProvider = ({ children }) => {
 
             if (response.ok) {
                 const data = await response.json();
-                setUser(data);
-                localStorage.setItem('user', JSON.stringify(data));
+
+                const userWithoutPassword = { id: data.id, username: data.username };
+                setUser(userWithoutPassword);
+                localStorage.setItem('user', JSON.stringify(userWithoutPassword));
+
                 setIsAuthenticated(true);
                 return true;
             } else {
