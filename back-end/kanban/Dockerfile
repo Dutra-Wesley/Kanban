@@ -18,7 +18,7 @@ FROM openjdk:17-jdk-alpine
  
 WORKDIR /app
  
-COPY --from=build /app/target/kanban-0.0.1-SNAPSHOT.jar vemnox1.jar
+COPY --from=build /app/target/kanban-0.0.1-SNAPSHOT.jar kanban.jar
  
 EXPOSE 8080
  
